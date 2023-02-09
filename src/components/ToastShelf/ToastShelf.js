@@ -6,7 +6,7 @@ import styles from "./ToastShelf.module.css";
 import { ToastContext } from "../ToastProvider/ToastProvider";
 
 function ToastShelf() {
-  const { toasts, resetToasts } = React.useContext(ToastContext);
+  const { toasts } = React.useContext(ToastContext);
 
   return (
     <ol
