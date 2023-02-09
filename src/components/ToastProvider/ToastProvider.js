@@ -18,6 +18,20 @@ function ToastProvider({ children }) {
     },
   ]);
 
+  React.useEffect(() => {
+    function handleEscape(event) {
+      if (event.code === "Escape") {
+        resetToasts();
+      }
+    }
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
   function createToast(variant, message) {
     const id = crypto.randomUUID();
     setToasts([...toasts, { id, variant, message }]);
@@ -29,12 +43,17 @@ function ToastProvider({ children }) {
     setToasts(nextToasts);
   }
 
+  function resetToasts() {
+    setToasts([]);
+  }
+
   return (
     <ToastContext.Provider
       value={{
         toasts,
         createToast,
         dismissToast,
+        resetToasts,
       }}
     >
       {children}
